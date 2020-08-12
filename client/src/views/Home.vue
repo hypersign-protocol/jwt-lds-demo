@@ -15,6 +15,9 @@
 .fullbody {
   width: 100%;
 }
+.floatLeft{
+  float: left;
+}
 
 </style>
 <template>
@@ -34,24 +37,13 @@
     <div class="row">
       <div class="col-md-12">
         <b-card no-body style="padding: 20px">
-        <b-tabs content-class="mt-3">
-          <b-tab title="Introduction" active>
-            <Introduction/>
-          </b-tab>
-          <b-tab title="Hashing">
-            <Hash />
-          </b-tab>
-          <b-tab title="Symmetric">
-            <Symmetric />
-          </b-tab>
-          <b-tab title="Asymmetric">
-            <Asymmetric />
-          </b-tab>
-          <b-tab title="Zero Knowledge Proof">
-            <ZKP />
-          </b-tab>
-        </b-tabs>
-      </b-card>
+          <h3>You Profile:</h3>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item floatLeft" v-for="item in userKeys" :key="item">
+                <b>{{item}}</b>: {{user[item]}}
+            </li>
+          </ul>
+        </b-card>
       </div>
     </div>
       
@@ -80,12 +72,14 @@ export default {
   data() {
     return {
       active: 0,
+      userKeys: [],
       user: {}
     };
   },
   created() {
     const usrStr = localStorage.getItem('user')
     this.user = JSON.parse(usrStr);
+    this.userKeys = Object.keys(this.user)
   },
   methods: {
     gotosubpage: id => {
