@@ -14,11 +14,21 @@ FIDO is trying to solve the very same problem. But FIDO is complex to understand
 
 ## Protocol
 
+### Core concepts
+
+// TODO: Write explanations.
+
+* JSON-ld
+* Linked Data Signatures
+* JWT
+
 ### Registration
 
 ![reg](docs/PKI-seq-reg.svg)
 
 - [Source](https://sequencediagram.org/index.html#initialData=C4S2BsFMAIAUGkCSBaAggVQCoAkBc0AlSAcxAGdgAnAQ1AHsA7AKCYAdrLQBjEdh4aF3AhI-Nh269q-aGUiUAbvJZCR-ZAD45i+fiIBHAK6QKZaJRLkqtEI2jtikJtqWVoyTatHA9lijXoGaAAzOkoAW2gAbXQAEVRYELDwgF0mBjpgGDpXQWFvXABGADpoADEQcHAzYAALGCJSfxs7UIjoAB0GACZS2LoAdwZwOmoAEzNHBnlaSDHoACkAZQB5ADlkcHmxui4yXC7oI+gAKhP0bX6uYoArMkYz6Gl5s4BhSgBPVmA6W-uGM5dADMpSWPwsNXqcmgOy4hnC3jMIAYh2Ohm0yGoUwEYWgIy41HAMMgChAXEgXQALKULvJ7BC5JCYGcyCBiAxDKxHgAjQzAH4MUoqfIyTSyeSufBLNkc1jmSBGEzAYpdWAcajhfbQADerEM3OEXHgkA+ABpZLVqECABTo+RXACUAF90plsrkXLpoEsJXSKGETPZ9YbjR8ngwxl0yJabXbKI7oMjoHUYHHk9QDZBis5fW4PBovPwpTLOYQTKxGHJSit4NmmEA)
+
+// TODO: Write explanations for userdoc and credential doc
 
 ### Authentication
 
@@ -98,32 +108,47 @@ Login | Proof
 ------|-------
 ![db](docs/PKI-login.png) | ![db](docs/PKI-proof_.png)
 
+
+## Attack Vectors
+
+// TODO
+
+## Problems with Basic-Auth
+
+* Store user sensitive information in the server database which can be prone to hack.
+* Passwords on their own do not constitute sufficient security for many activities.
+* Passwords can be shared. 
+* MFA brings the complexity and does not really solve the sharing problem. 
+* Passwords needs to be changed frequently.
+* Increase in password complexity can bring user hinderance. 
+
+> My father sent me facebook request for the 7th time the previous month. ha ha! 
+
+> Is security is not for all kind of user?
+
+## Problems with PKI-Auth
+
+* For website
+    * Every website would need their user to register with them, as well as they need to provide some user-agent for storing credentials and user doc to their user. 
+    * As compared to basic-auth, the pki-auth is still complex for a website to implement and it has security concerns. So the developer must have to be aware of attack vectors and proper cryptographic premitives.
+* For user
+    * On the other hand, user has to install multiple user-agents to manage the same userdata but different crypto-materials for different website. It is good for the security since every website will have different keypairs but very bad design for usability. 
+* Overall, usability is the main challenge to solve here. 
+
+## Next Step
+
+* Now that we undestood the problem with the protocol, we need to come up with a solution where user register only for one time (like in case of social login) and other website just need to support that login. In this way, user will only have one wallet and one time registration.
+* However, we have to make sure that user uses different credentials for different websites (unlike facebook where one credetials is being used everywhere)
+
 ## Installation & Usage
 
-### Client
+* [Client](client/README.md)
+* [Server](server/README.md)
 
-```js
-cd client
-npm i
-npm run serve
-```
+## Disclaimer and Issues
 
-### Server
+* This work is **NOT** ready for production yet. So please use this work only for understanding purpose. 
+* Any other suggestion related to attack vectors or any other bugs in code, please create a issue for that. Thank You!
 
-```js
-cd server
-npm i
-npm run newdb // to setup database. Do not run this everytime. 
-npm run dev
-npm run build
-npm run test
-npm run start 
-```
 
-## APIs
 
-- `api/auth/register`: To register a user
-- `api/auth/login`: Tp authenticate a user
-- `api/auth/verify`: Verifies the authToken passed in header for client
-- `api/blog/created`: Protected with JSON web token
-- `api/blog/challenge`: To get a new challenge
